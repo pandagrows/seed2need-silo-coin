@@ -1,2 +1,2 @@
-# sssed2need-silo-coin
+# seed2need-silo-coin
 Silo
