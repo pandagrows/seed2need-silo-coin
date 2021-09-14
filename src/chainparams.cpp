@@ -74,7 +74,7 @@ static Checkpoints::MapCheckpoints mapCheckpoints = {
     { 100, uint256S("00000aef07a2bad8c2bb7ebf0a418280ce9eed72f0116ddb5e187839af6f627e")},
     { 382, uint256S("5fefa76c04535a56250f4447bc6acd318f5bfcd507d695c56c0516fb066c38d3")},  // POS Activation
     { 500, uint256S("168eaf2cef343350c05737f20d0460c83f81e762c9fd0a4e59bc9566bd3f0a7d")}, // POS V2 Activation
-    { 1500, uint256S(0916e987097e303d9055a837669f631a74db21019232e64866828c512e73d285")}, // POS V3_4 Activation
+    { 1500, uint256S("0916e987097e303d9055a837669f631a74db21019232e64866828c512e73d285")}, // POS V3_4 Activation
     { 4000, uint256S("dfe124752ed4b3d774c992b505bcac5a2091039e40ec44e9dfd95c0907616754")}, // POS V4_0 Activation
 
 
