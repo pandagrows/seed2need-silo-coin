@@ -77,7 +77,6 @@ static Checkpoints::MapCheckpoints mapCheckpoints = {
     { 1500, uint256S("0916e987097e303d9055a837669f631a74db21019232e64866828c512e73d285")}, // POS V3_4 Activation
     { 4000, uint256S("dfe124752ed4b3d774c992b505bcac5a2091039e40ec44e9dfd95c0907616754")}, // POS V4_0 Activation
 
-
 };
 
 static const Checkpoints::CCheckpointData data = {
@@ -193,7 +192,7 @@ public:
                 uint256S("0xfd129cdf866130b764ab256aee8082223afd37b4b7060c44267a280bcc1541dd");
 		**/
         consensus.vUpgrades[Consensus::UPGRADE_BIP65].hashActivationBlock =
-                uint256S("0x5fefa76c04535a56250f4447bc6acd318f5bfcd507d695c56c0516fb066c38d3")			
+                uint256S("0x5fefa76c04535a56250f4447bc6acd318f5bfcd507d695c56c0516fb066c38d3");			
         consensus.vUpgrades[Consensus::UPGRADE_V3_4].hashActivationBlock =
                 uint256S("0x0916e987097e303d9055a837669f631a74db21019232e64866828c512e73d285");
         consensus.vUpgrades[Consensus::UPGRADE_V4_0].hashActivationBlock =
