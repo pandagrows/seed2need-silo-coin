@@ -1,0 +1,15 @@
+# http://standards.freedesktop.org/desktop-entry-spec/desktop-entry-spec-1.0.html
+
+[Desktop Entry]
+Encoding=UTF-8
+Name=SEED2NEED Core Daemon SNAP
+Comment=main
+GenericName=SEED2NEED Digital Currency Daemon Client main network
+Exec=seed2need-core.daemon %u
+Terminal=true
+Type=Application
+Icon=${SNAP}/share/pixmaps/seed2need.png
+MimeType=x-scheme-handler/silo;
+Categories=X-Office;X-Finance;
+Keywords=internet;seed2need;zsilo;core;wallet;daemon;main;snap;launchpad;crypto;digital;currency;coin;token;zerocoin;
+Version=1.0
