@@ -16,14 +16,14 @@ BEGIN
     BEGIN
         BLOCK "040904E4" // U.S. English - multilingual (hex)
         BEGIN
-            VALUE "CompanyName",        "Seed2need"
-            VALUE "FileDescription",    "Seed2need-cli (OSS RPC client for Seed2need)"
+            VALUE "CompanyName",        "SEED2NEED"
+            VALUE "FileDescription",    "seed2need-cli (OSS RPC client for " PACKAGE_NAME ")"
             VALUE "FileVersion",        VER_FILEVERSION_STR
             VALUE "InternalName",       "seed2need-cli"
             VALUE "LegalCopyright",     COPYRIGHT_STR
             VALUE "LegalTrademarks1",   "Distributed under the MIT/X11 software license, see the accompanying file COPYING or http://www.opensource.org/licenses/mit-license.php."
             VALUE "OriginalFilename",   "seed2need-cli.exe"
-            VALUE "ProductName",        "Seed2need-cli"
+            VALUE "ProductName",        "seed2need-cli"
             VALUE "ProductVersion",     VER_PRODUCTVERSION_STR
         END
     END

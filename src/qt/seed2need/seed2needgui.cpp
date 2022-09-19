@@ -17,9 +17,8 @@
 #include "guiinterface.h"
 #include "qt/seed2need/qtutils.h"
 #include "qt/seed2need/defaultdialog.h"
-
-#include "init.h"
-#include "util.h"
+#include "shutdown.h"
+#include "util/system.h"
 
 #include <QApplication>
 #include <QColor>
@@ -59,14 +58,14 @@ SEED2NEEDGUI::SEED2NEEDGUI(const NetworkStyle* networkStyle, QWidget* parent) :
 
 #ifdef ENABLE_WALLET
     /* if compiled with wallet support, -disablewallet can still disable the wallet */
-    enableWallet = !gArgs.GetBoolArg("-disablewallet", false);
+    enableWallet = !gArgs.GetBoolArg("-disablewallet", DEFAULT_DISABLE_WALLET);
 #else
     enableWallet = false;
 #endif // ENABLE_WALLET
 
     QString windowTitle = QString::fromStdString(gArgs.GetArg("-windowtitle", ""));
     if (windowTitle.isEmpty()) {
-        windowTitle = tr("SEED2NEED Core") + " - ";
+        windowTitle = QString{PACKAGE_NAME} + " - ";
         windowTitle += ((enableWallet) ? tr("Wallet") : tr("Node"));
     }
     windowTitle += " " + networkStyle->getTitleAddText();
@@ -126,6 +125,7 @@ SEED2NEEDGUI::SEED2NEEDGUI(const NetworkStyle* networkStyle, QWidget* parent) :
         addressesWidget = new AddressesWidget(this);
         masterNodesWidget = new MasterNodesWidget(this);
         coldStakingWidget = new ColdStakingWidget(this);
+        governancewidget = new GovernanceWidget(this);
         settingsWidget = new SettingsWidget(this);
 
         // Add to parent
@@ -135,6 +135,7 @@ SEED2NEEDGUI::SEED2NEEDGUI(const NetworkStyle* networkStyle, QWidget* parent) :
         stackedContainer->addWidget(addressesWidget);
         stackedContainer->addWidget(masterNodesWidget);
         stackedContainer->addWidget(coldStakingWidget);
+        stackedContainer->addWidget(governancewidget);
         stackedContainer->addWidget(settingsWidget);
         stackedContainer->setCurrentWidget(dashboard);
 
@@ -202,6 +203,8 @@ void SEED2NEEDGUI::connectActions()
     connect(masterNodesWidget, &MasterNodesWidget::execDialog, this, &SEED2NEEDGUI::execDialog);
     connect(coldStakingWidget, &ColdStakingWidget::showHide, this, &SEED2NEEDGUI::showHide);
     connect(coldStakingWidget, &ColdStakingWidget::execDialog, this, &SEED2NEEDGUI::execDialog);
+    connect(governancewidget, &GovernanceWidget::showHide, this, &SEED2NEEDGUI::showHide);
+    connect(governancewidget, &GovernanceWidget::execDialog, this, &SEED2NEEDGUI::execDialog);
     connect(settingsWidget, &SettingsWidget::execDialog, this, &SEED2NEEDGUI::execDialog);
 }
 
@@ -210,7 +213,7 @@ void SEED2NEEDGUI::createTrayIcon(const NetworkStyle* networkStyle)
 {
 #ifndef Q_OS_MAC
     trayIcon = new QSystemTrayIcon(this);
-    QString toolTip = tr("SEED2NEED Core client") + " " + networkStyle->getTitleAddText();
+    QString toolTip = tr("%1 client").arg(PACKAGE_NAME) + " " + networkStyle->getTitleAddText();
     trayIcon->setToolTip(toolTip);
     trayIcon->setIcon(networkStyle->getAppIcon());
     trayIcon->hide();
@@ -251,7 +254,9 @@ void SEED2NEEDGUI::setClientModel(ClientModel* _clientModel)
         topBar->setClientModel(clientModel);
         dashboard->setClientModel(clientModel);
         sendWidget->setClientModel(clientModel);
+        masterNodesWidget->setClientModel(clientModel);
         settingsWidget->setClientModel(clientModel);
+        governancewidget->setClientModel(clientModel);
 
         // Receive and report messages from client model
         connect(clientModel, &ClientModel::message, this, &SEED2NEEDGUI::message);
@@ -260,6 +265,7 @@ void SEED2NEEDGUI::setClientModel(ClientModel* _clientModel)
         });
         connect(topBar, &TopBar::walletSynced, dashboard, &DashboardWidget::walletSynced);
         connect(topBar, &TopBar::walletSynced, coldStakingWidget, &ColdStakingWidget::walletSynced);
+        connect(topBar, &TopBar::tierTwoSynced, governancewidget, &GovernanceWidget::tierTwoSynced);
 
         // Get restart command-line parameters and handle restart
         connect(settingsWidget, &SettingsWidget::handleRestart, [this](QStringList arg){handleRestart(arg);});
@@ -337,6 +343,9 @@ void SEED2NEEDGUI::changeEvent(QEvent* e)
             if (!(wsevt->oldState() & Qt::WindowMinimized) && isMinimized()) {
                 QTimer::singleShot(0, this, &SEED2NEEDGUI::hide);
                 e->ignore();
+            } else if ((wsevt->oldState() & Qt::WindowMinimized) && !isMinimized()) {
+                QTimer::singleShot(0, this, &SEED2NEEDGUI::show);
+                e->ignore();
             }
         }
     }
@@ -349,10 +358,14 @@ void SEED2NEEDGUI::closeEvent(QCloseEvent* event)
     if (clientModel && clientModel->getOptionsModel()) {
         if (!clientModel->getOptionsModel()->getMinimizeOnClose()) {
             QApplication::quit();
+        } else {
+            QMainWindow::showMinimized();
+            event->ignore();
         }
     }
-#endif
+#else
     QMainWindow::closeEvent(event);
+#endif
 }
 
 
@@ -367,7 +380,7 @@ void SEED2NEEDGUI::messageInfo(const QString& text)
 
 void SEED2NEEDGUI::message(const QString& title, const QString& message, unsigned int style, bool* ret)
 {
-    QString strTitle =  tr("SEED2NEED Core"); // default title
+    QString strTitle = QString{PACKAGE_NAME}; // default title
     // Default to information icon
     int nNotifyIcon = Notificator::Information;
 
@@ -436,7 +449,7 @@ bool SEED2NEEDGUI::openStandardDialog(QString title, QString body, QString okBtn
     } else {
         dialog = new DefaultDialog();
         dialog->setText(title, body, okBtn);
-        dialog->setWindowTitle(tr("SEED2NEED Core"));
+        dialog->setWindowTitle(PACKAGE_NAME);
         dialog->adjustSize();
         dialog->raise();
         dialog->exec();
@@ -498,6 +511,11 @@ void SEED2NEEDGUI::goToMasterNodes()
 void SEED2NEEDGUI::goToColdStaking()
 {
     showTop(coldStakingWidget);
+}
+
+void SEED2NEEDGUI::goToGovernance()
+{
+    showTop(governancewidget);
 }
 
 void SEED2NEEDGUI::goToSettings(){
@@ -593,7 +611,7 @@ int SEED2NEEDGUI::getNavWidth()
 void SEED2NEEDGUI::openFAQ(SettingsFaqWidget::Section section)
 {
     showHide(true);
-    SettingsFaqWidget* dialog = new SettingsFaqWidget(this);
+    SettingsFaqWidget* dialog = new SettingsFaqWidget(this, clientModel);
     dialog->setSection(section);
     openDialogWithOpaqueBackgroundFullScreen(dialog, this);
     dialog->deleteLater();
@@ -601,6 +619,19 @@ void SEED2NEEDGUI::openFAQ(SettingsFaqWidget::Section section)
 
 
 #ifdef ENABLE_WALLET
+void SEED2NEEDGUI::setGovModel(GovernanceModel* govModel)
+{
+    if (!stackedContainer || !clientModel) return;
+    governancewidget->setGovModel(govModel);
+}
+
+void SEED2NEEDGUI::setMNModel(MNModel* mnModel)
+{
+    if (!stackedContainer || !clientModel) return;
+    governancewidget->setMNModel(mnModel);
+    masterNodesWidget->setMNModel(mnModel);
+}
+
 bool SEED2NEEDGUI::addWallet(const QString& name, WalletModel* walletModel)
 {
     // Single wallet supported for now..
@@ -616,6 +647,7 @@ bool SEED2NEEDGUI::addWallet(const QString& name, WalletModel* walletModel)
     addressesWidget->setWalletModel(walletModel);
     masterNodesWidget->setWalletModel(walletModel);
     coldStakingWidget->setWalletModel(walletModel);
+    governancewidget->setWalletModel(walletModel);
     settingsWidget->setWalletModel(walletModel);
 
     // Connect actions..
@@ -626,6 +658,7 @@ bool SEED2NEEDGUI::addWallet(const QString& name, WalletModel* walletModel)
     connect(sendWidget, &SendWidget::message,this, &SEED2NEEDGUI::message);
     connect(receiveWidget, &ReceiveWidget::message,this, &SEED2NEEDGUI::message);
     connect(addressesWidget, &AddressesWidget::message,this, &SEED2NEEDGUI::message);
+    connect(governancewidget, &GovernanceWidget::message,this, &SEED2NEEDGUI::message);
     connect(settingsWidget, &SettingsWidget::message, this, &SEED2NEEDGUI::message);
 
     // Pass through transaction notifications
@@ -650,7 +683,7 @@ void SEED2NEEDGUI::incomingTransaction(const QString& date, int unit, const CAmo
     // Only send notifications when not disabled
     if (!bdisableSystemnotifications) {
         // On new transaction, make an info balloon
-        message((amount) < 0 ? (pwalletMain->fMultiSendNotify == true ? tr("Sent MultiSend transaction") : tr("Sent transaction")) : tr("Incoming transaction"),
+        message(amount < 0 ? tr("Sent transaction") : tr("Incoming transaction"),
             tr("Date: %1\n"
                "Amount: %2\n"
                "Type: %3\n"
@@ -660,8 +693,6 @@ void SEED2NEEDGUI::incomingTransaction(const QString& date, int unit, const CAmo
                 .arg(type)
                 .arg(address),
             CClientUIInterface::MSG_INFORMATION);
-
-        pwalletMain->fMultiSendNotify = false;
     }
 }
 

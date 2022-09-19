@@ -69,37 +69,36 @@ static CBlock CreateGenesisBlock(uint32_t nTime, uint32_t nNonce, uint32_t nBits
  *    timestamp before)
  * + Contains no strange transactions
  */
-static Checkpoints::MapCheckpoints mapCheckpoints = {
-	{ 0, uint256S("0000029ab22881ef804f349a36d7ebe3b31e3d7a067d8c1bdf14348d035406f4")},
+static MapCheckpoints mapCheckpoints = {
+    { 0, uint256S("0000029ab22881ef804f349a36d7ebe3b31e3d7a067d8c1bdf14348d035406f4")},
     { 100, uint256S("00000aef07a2bad8c2bb7ebf0a418280ce9eed72f0116ddb5e187839af6f627e")},
-    { 382, uint256S("5fefa76c04535a56250f4447bc6acd318f5bfcd507d695c56c0516fb066c38d3")},  // POS Activation
-    { 500, uint256S("168eaf2cef343350c05737f20d0460c83f81e762c9fd0a4e59bc9566bd3f0a7d")}, // POS V2 Activation
-    { 1500, uint256S("0916e987097e303d9055a837669f631a74db21019232e64866828c512e73d285")}, // POS V3_4 Activation
-    { 4000, uint256S("dfe124752ed4b3d774c992b505bcac5a2091039e40ec44e9dfd95c0907616754")}, // POS V4_0 Activation
-
+    { 382, uint256S("5fefa76c04535a56250f4447bc6acd318f5bfcd507d695c56c0516fb066c38d3")}, 
+    { 500, uint256S("168eaf2cef343350c05737f20d0460c83f81e762c9fd0a4e59bc9566bd3f0a7d")},
+    { 1500, uint256S("0916e987097e303d9055a837669f631a74db21019232e64866828c512e73d285")},
+    { 4000, uint256S("dfe124752ed4b3d774c992b505bcac5a2091039e40ec44e9dfd95c0907616754")},
 };
 
-static const Checkpoints::CCheckpointData data = {
+static const CCheckpointData data = {
     &mapCheckpoints,
-	1631588535, // * UNIX timestamp of last checkpoint block
-	7682,    // * total number of transactions between genesis and last checkpoint
-	            //   (the tx=... number in the UpdateTip debug.log lines)
+    1631588535, // * UNIX timestamp of last checkpoint block
+    7682,    // * total number of transactions between genesis and last checkpoint
+                //   (the tx=... number in the UpdateTip debug.log lines)
     1440        // * estimated number of transactions per day after checkpoint
 };
 
-static Checkpoints::MapCheckpoints mapCheckpointsTestnet = {
+static MapCheckpoints mapCheckpointsTestnet = {
     {0, uint256S("0x001")},
     //{    201, uint256S("6ae7d52092fd918c8ac8d9b1334400387d3057997e6e927a88e57186dc395231")},     // v5 activation (PoS/Sapling)
 };
 
-static const Checkpoints::CCheckpointData dataTestnet = {
+static const CCheckpointData dataTestnet = {
     &mapCheckpointsTestnet,
     1454124731,
     0,
     3000};
 
-static Checkpoints::MapCheckpoints mapCheckpointsRegtest = {{0, uint256S("0x001")}};
-static const Checkpoints::CCheckpointData dataRegtest = {
+static MapCheckpoints mapCheckpointsRegtest = {{0, uint256S("0x001")}};
+static const CCheckpointData dataRegtest = {
     &mapCheckpointsRegtest,
     1454124731,
     0,
@@ -114,22 +113,22 @@ public:
 
         genesis = CreateGenesisBlock(1629576104, 1884258, 0x1e0ffff0, 1, 250 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
-
         assert(consensus.hashGenesisBlock == uint256S("0x0000029ab22881ef804f349a36d7ebe3b31e3d7a067d8c1bdf14348d035406f4"));
         assert(genesis.hashMerkleRoot == uint256S("0xe8685e30fdc4689d2eeb90eaaf85064f0ea8011a3c491a2a95fbbfe3f231fc06"));
- 
+
         consensus.fPowAllowMinDifficultyBlocks = false;
-        consensus.powLimit   = ~UINT256_ZERO >> 20;   // SEED2NEED starting difficulty is 1 / 2^12
-        consensus.posLimitV1 = ~UINT256_ZERO >> 24;
-        consensus.posLimitV2 = ~UINT256_ZERO >> 20;
+        consensus.fPowNoRetargeting = false;
+        consensus.powLimit   = uint256S("0x00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
+        consensus.posLimitV1 = uint256S("0x000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
+        consensus.posLimitV2 = uint256S("0x00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.nBudgetCycleBlocks = 43200;       // approx. 1 every 30 days
         consensus.nBudgetFeeConfirmations = 6;      // Number of confirmations for the finalization fee
         consensus.nCoinbaseMaturity = 50;
         consensus.nFutureTimeDriftPoW = 7200;
         consensus.nFutureTimeDriftPoS = 180;
-        consensus.nMasternodeCountDrift = 20;       // num of MN we allow the see-saw payments to be off by
-        consensus.nMaxMoneyOut = 50000000 * COIN;
-        consensus.nPoolMaxTransactions = 3;
+        consensus.nMaxMoneyOut = 521000000 * COIN;
+        consensus.nMNCollateralAmt = 1000000 * COIN;
+        consensus.nMNBlockReward = 3 * COIN;
         consensus.nProposalEstablishmentTime = 60 * 60 * 24;    // must be at least a day old to make it into a budget
         consensus.nStakeMinAge = 60 * 60;
         consensus.nStakeMinDepth = 600;
@@ -149,7 +148,6 @@ public:
         consensus.height_last_invalid_UTXO = 999999999;
         consensus.height_last_ZC_AccumCheckpoint = 999999999;
         consensus.height_last_ZC_WrappedSerials = 999999999;
-        consensus.height_ZC_RecalcAccumulators = 999999999;
 
         // validation by-pass
         consensus.nSeed2needBadBlockTime = 1471401614;    // Skip nBit validation of Block 259201 per PR #915
@@ -168,6 +166,7 @@ public:
         consensus.ZC_MinMintFee = 1 * CENT;
         consensus.ZC_MinStakeDepth = 200;
         consensus.ZC_TimeStart = 1508214600;        // October 17, 2017 4:30:00 AM
+        consensus.ZC_HeightStart = 999999999;
 
         // Network upgrades
         consensus.vUpgrades[Consensus::BASE_NETWORK].nActivationHeight =
@@ -183,21 +182,26 @@ public:
         consensus.vUpgrades[Consensus::UPGRADE_V3_4].nActivationHeight          = 1500;
         consensus.vUpgrades[Consensus::UPGRADE_V4_0].nActivationHeight          = 4000;
         consensus.vUpgrades[Consensus::UPGRADE_V5_0].nActivationHeight          = 6000;
-		/**
-        consensus.vUpgrades[Consensus::UPGRADE_ZC].hashActivationBlock =
+        consensus.vUpgrades[Consensus::UPGRADE_V5_2].nActivationHeight          = 553044;
+        consensus.vUpgrades[Consensus::UPGRADE_V5_3].nActivationHeight          = 563044;
+        consensus.vUpgrades[Consensus::UPGRADE_V6_0].nActivationHeight =
+                Consensus::NetworkUpgrade::NO_ACTIVATION_HEIGHT;
+
+        /**
+		consensus.vUpgrades[Consensus::UPGRADE_ZC].hashActivationBlock =
                 uint256S("0x5b2482eca24caf2a46bb22e0545db7b7037282733faa3a42ec20542509999a64");
         consensus.vUpgrades[Consensus::UPGRADE_ZC_V2].hashActivationBlock =
                 uint256S("0x37ea75fe1c9314171cff429a91b25b9f11331076d1c9de50ee4054d61877f8af");
 		consensus.vUpgrades[Consensus::UPGRADE_ZC_PUBLIC].hashActivationBlock =
-                uint256S("0xfd129cdf866130b764ab256aee8082223afd37b4b7060c44267a280bcc1541dd");
+                uint256S("0xe2448b76d88d37aba4194ffed1041b680d779919157ddf5cbf423373d7f8078e");		
 		**/
         consensus.vUpgrades[Consensus::UPGRADE_BIP65].hashActivationBlock =
-                uint256S("0x5fefa76c04535a56250f4447bc6acd318f5bfcd507d695c56c0516fb066c38d3");			
+                uint256S("0x5fefa76c04535a56250f4447bc6acd318f5bfcd507d695c56c0516fb066c38d3");
         consensus.vUpgrades[Consensus::UPGRADE_V3_4].hashActivationBlock =
                 uint256S("0x0916e987097e303d9055a837669f631a74db21019232e64866828c512e73d285");
         consensus.vUpgrades[Consensus::UPGRADE_V4_0].hashActivationBlock =
                 uint256S("0xdfe124752ed4b3d774c992b505bcac5a2091039e40ec44e9dfd95c0907616754");
- 
+
         /**
          * The message start string is designed to be unlikely to occur in normal data.
          * The characters are rarely used upper ASCII, not valid as UTF-8, and produce
@@ -210,8 +214,8 @@ public:
         nDefaultPort = 4820;
 
         // Note that of those with the service bits flag, most only support a subset of possible options
-        vSeeds.emplace_back("seed2need.me", "seed1.seed2need.me", true);     // Primary DNS Seeder from Fuzzbawls
-        vSeeds.emplace_back("seed2need.me", "seed2.seed2need.me", true);    // Secondary DNS Seeder from Fuzzbawls
+        vSeeds.emplace_back("seed1.seed2need.me", true);     // Primary DNS Seeder from Fuzzbawls
+        vSeeds.emplace_back("seed2.seed2need.me", true);    // Secondary DNS Seeder from Fuzzbawls
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1, 35);
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1, 23);
@@ -222,17 +226,20 @@ public:
         // BIP44 coin type is from https://github.com/satoshilabs/slips/blob/master/slip-0044.md
         base58Prefixes[EXT_COIN_TYPE] = {0x80, 0x00, 0x01, 0x33};
 
-        vFixedSeeds = std::vector<SeedSpec6>(pnSeed6_main, pnSeed6_main + ARRAYLEN(pnSeed6_main));
+        vFixedSeeds = std::vector<uint8_t>(std::begin(chainparams_seed_main), std::end(chainparams_seed_main));
+
+        // Reject non-standard transactions by default
+        fRequireStandard = true;
 
         // Sapling
         bech32HRPs[SAPLING_PAYMENT_ADDRESS]      = "ps";
         bech32HRPs[SAPLING_FULL_VIEWING_KEY]     = "pviews";
-        bech32HRPs[SAPLING_INCOMING_VIEWING_KEY] = "siloks";
+        bech32HRPs[SAPLING_INCOMING_VIEWING_KEY] = "farmks";
         bech32HRPs[SAPLING_EXTENDED_SPEND_KEY]   = "p-secret-spending-key-main";
         bech32HRPs[SAPLING_EXTENDED_FVK]         = "pxviews";
     }
 
-    const Checkpoints::CCheckpointData& Checkpoints() const
+    const CCheckpointData& Checkpoints() const
     {
         return data;
     }
@@ -251,22 +258,22 @@ public:
 
         genesis = CreateGenesisBlock(1629576109, 346965, 0x1e0ffff0, 1, 250 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
-	
         assert(consensus.hashGenesisBlock == uint256S("0x00000377ab8e172e7e4e0135409b829b8c29287261d15069f8a0fdc439e80c46"));
         assert(genesis.hashMerkleRoot == uint256S("0xe8685e30fdc4689d2eeb90eaaf85064f0ea8011a3c491a2a95fbbfe3f231fc06"));
 
         consensus.fPowAllowMinDifficultyBlocks = true;
-        consensus.powLimit   = ~UINT256_ZERO >> 20;   // SEED2NEED starting difficulty is 1 / 2^12
-        consensus.posLimitV1 = ~UINT256_ZERO >> 24;
-        consensus.posLimitV2 = ~UINT256_ZERO >> 20;
+        consensus.fPowNoRetargeting = false;
+        consensus.powLimit   = uint256S("0x00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
+        consensus.posLimitV1 = uint256S("0x000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
+        consensus.posLimitV2 = uint256S("0x00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.nBudgetCycleBlocks = 144;         // approx 10 cycles per day
         consensus.nBudgetFeeConfirmations = 3;      // (only 8-blocks window for finalization on testnet)
         consensus.nCoinbaseMaturity = 15;
         consensus.nFutureTimeDriftPoW = 7200;
         consensus.nFutureTimeDriftPoS = 180;
-        consensus.nMasternodeCountDrift = 20;       // num of MN we allow the see-saw payments to be off by
-        consensus.nMaxMoneyOut = 21000000 * COIN;
-        consensus.nPoolMaxTransactions = 3;
+        consensus.nMaxMoneyOut = 521000000 * COIN;
+        consensus.nMNCollateralAmt = 1000000 * COIN;
+        consensus.nMNBlockReward = 3 * COIN;
         consensus.nProposalEstablishmentTime = 60 * 5;  // at least 5 min old to make it into a budget
         consensus.nStakeMinAge = 60 * 60;
         consensus.nStakeMinDepth = 100;
@@ -286,7 +293,7 @@ public:
         consensus.height_last_invalid_UTXO = -1;
         consensus.height_last_ZC_AccumCheckpoint = -1;
         consensus.height_last_ZC_WrappedSerials = -1;
-        consensus.height_ZC_RecalcAccumulators = 999999999;
+        consensus.ZC_HeightStart = 999999999;
 
         // Zerocoin-related params
         consensus.ZC_Modulus = "25195908475657893494027183240048398571429282126204032027777137836043662020707595556264018525880784"
@@ -316,6 +323,10 @@ public:
         consensus.vUpgrades[Consensus::UPGRADE_V3_4].nActivationHeight          = 201;
         consensus.vUpgrades[Consensus::UPGRADE_V4_0].nActivationHeight          = 201;
         consensus.vUpgrades[Consensus::UPGRADE_V5_0].nActivationHeight          = 201;
+        consensus.vUpgrades[Consensus::UPGRADE_V5_2].nActivationHeight          = 201;
+        consensus.vUpgrades[Consensus::UPGRADE_V5_3].nActivationHeight          = 201;
+        consensus.vUpgrades[Consensus::UPGRADE_V6_0].nActivationHeight =
+                Consensus::NetworkUpgrade::NO_ACTIVATION_HEIGHT;
 
         /**
          * The message start string is designed to be unlikely to occur in normal data.
@@ -329,13 +340,13 @@ public:
         nDefaultPort = 5020;
 
         // nodes with support for servicebits filtering should be at the top
-        vSeeds.emplace_back("seed2need.me", "seed2need-testnet.seed.seed2need.me", true);
-        vSeeds.emplace_back("seed2need.me", "seed2need-testnet.seed2.seed2need.me", true);
+        vSeeds.emplace_back("seed2need-testnet.seed.seed2need.me", true);
+        vSeeds.emplace_back("seed2need-testnet.seed2.seed2need.me", true);
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1, 58); // Testnet seed2need addresses start with 'x' or 'y'
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1, 48);  // Testnet seed2need script addresses start with '8' or '9'
         base58Prefixes[STAKING_ADDRESS] = std::vector<unsigned char>(1, 53);     // starting with 'W'
-        base58Prefixes[SECRET_KEY] = std::vector<unsigned char>(1, 65);     // Testnet private keys start with '9' or 'c' (Bitcoin defaults)
+        base58Prefixes[SECRET_KEY] = std::vector<unsigned char>(1, 61);     // Testnet private keys start with '9' or 'c' (Bitcoin defaults)
         // Testnet seed2need BIP32 pubkeys start with 'DRKV'
         base58Prefixes[EXT_PUBLIC_KEY] = {0x8d, 0x85, 0x13, 0x49};
         // Testnet seed2need BIP32 prvkeys start with 'DRKP'
@@ -343,17 +354,19 @@ public:
         // Testnet seed2need BIP44 coin type is '1' (All coin's testnet default)
         base58Prefixes[EXT_COIN_TYPE] = {0x80, 0x00, 0x00, 0x21};
 
-        vFixedSeeds = std::vector<SeedSpec6>(pnSeed6_test, pnSeed6_test + ARRAYLEN(pnSeed6_test));
+        vFixedSeeds = std::vector<uint8_t>(std::begin(chainparams_seed_test), std::end(chainparams_seed_test));
+
+        fRequireStandard = false;
 
         // Sapling
         bech32HRPs[SAPLING_PAYMENT_ADDRESS]      = "ptestsapling";
         bech32HRPs[SAPLING_FULL_VIEWING_KEY]     = "pviewtestsapling";
-        bech32HRPs[SAPLING_INCOMING_VIEWING_KEY] = "siloktestsapling";
+        bech32HRPs[SAPLING_INCOMING_VIEWING_KEY] = "farmktestsapling";
         bech32HRPs[SAPLING_EXTENDED_SPEND_KEY]   = "p-secret-spending-key-test";
         bech32HRPs[SAPLING_EXTENDED_FVK]         = "pxviewtestsapling";
     }
 
-    const Checkpoints::CCheckpointData& Checkpoints() const
+    const CCheckpointData& Checkpoints() const
     {
         return dataTestnet;
     }
@@ -371,25 +384,25 @@ public:
 
         genesis = CreateGenesisBlock(1629576114, 983573, 0x1e0ffff0, 1, 250 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
-		
         assert(consensus.hashGenesisBlock == uint256S("0x00000811c00599acbd2514eb9a0b9ec33b9bd650739a554a642bf4761dc419f3"));
         assert(genesis.hashMerkleRoot == uint256S("0xe8685e30fdc4689d2eeb90eaaf85064f0ea8011a3c491a2a95fbbfe3f231fc06"));
 
         consensus.fPowAllowMinDifficultyBlocks = true;
-        consensus.powLimit   = ~UINT256_ZERO >> 20;   // SEED2NEED starting difficulty is 1 / 2^12
-        consensus.posLimitV1 = ~UINT256_ZERO >> 24;
-        consensus.posLimitV2 = ~UINT256_ZERO >> 20;
+        consensus.fPowNoRetargeting = true;
+        consensus.powLimit   = uint256S("0x7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
+        consensus.posLimitV1 = uint256S("0x000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
+        consensus.posLimitV2 = uint256S("0x00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.nBudgetCycleBlocks = 144;         // approx 10 cycles per day
         consensus.nBudgetFeeConfirmations = 3;      // (only 8-blocks window for finalization on regtest)
         consensus.nCoinbaseMaturity = 100;
         consensus.nFutureTimeDriftPoW = 7200;
         consensus.nFutureTimeDriftPoS = 180;
-        consensus.nMasternodeCountDrift = 4;        // num of MN we allow the see-saw payments to be off by
         consensus.nMaxMoneyOut = 43199500 * COIN;
-        consensus.nPoolMaxTransactions = 2;
+        consensus.nMNCollateralAmt = 100 * COIN;
+        consensus.nMNBlockReward = 3 * COIN;
         consensus.nProposalEstablishmentTime = 60 * 5;  // at least 5 min old to make it into a budget
         consensus.nStakeMinAge = 0;
-        consensus.nStakeMinDepth = 2;
+        consensus.nStakeMinDepth = 20;
         consensus.nTargetTimespan = 40 * 60;
         consensus.nTargetTimespanV2 = 30 * 60;
         consensus.nTargetSpacing = 1 * 60;
@@ -409,8 +422,7 @@ public:
         // height based activations
         consensus.height_last_invalid_UTXO = -1;
         consensus.height_last_ZC_AccumCheckpoint = 310;     // no checkpoints on regtest
-        consensus.height_last_ZC_WrappedSerials = -1;
-        consensus.height_ZC_RecalcAccumulators = 999999999;
+        consensus.height_last_ZC_WrappedSerials = 999999999;
 
         // Zerocoin-related params
         consensus.ZC_Modulus = "25195908475657893494027183240048398571429282126204032027777137836043662020707595556264018525880784"
@@ -425,6 +437,7 @@ public:
         consensus.ZC_MinMintFee = 1 * CENT;
         consensus.ZC_MinStakeDepth = 10;
         consensus.ZC_TimeStart = 0;                 // not implemented on regtest
+        consensus.ZC_HeightStart = 0;
 
         // Network upgrades
         consensus.vUpgrades[Consensus::BASE_NETWORK].nActivationHeight =
@@ -442,6 +455,10 @@ public:
         consensus.vUpgrades[Consensus::UPGRADE_V4_0].nActivationHeight          =
                 Consensus::NetworkUpgrade::ALWAYS_ACTIVE;
         consensus.vUpgrades[Consensus::UPGRADE_V5_0].nActivationHeight          = 300;
+        consensus.vUpgrades[Consensus::UPGRADE_V5_2].nActivationHeight          = 300;
+        consensus.vUpgrades[Consensus::UPGRADE_V5_3].nActivationHeight          = 251;
+        consensus.vUpgrades[Consensus::UPGRADE_V6_0].nActivationHeight =
+                Consensus::NetworkUpgrade::NO_ACTIVATION_HEIGHT;
 
         /**
          * The message start string is designed to be unlikely to occur in normal data.
@@ -465,15 +482,18 @@ public:
         // Testnet seed2need BIP44 coin type is '1' (All coin's testnet default)
         base58Prefixes[EXT_COIN_TYPE] = {0x80, 0x00, 0x03, 0x3e};
 
+        // Reject non-standard transactions by default
+        fRequireStandard = true;
+
         // Sapling
         bech32HRPs[SAPLING_PAYMENT_ADDRESS]      = "ptestsapling";
         bech32HRPs[SAPLING_FULL_VIEWING_KEY]     = "pviewtestsapling";
-        bech32HRPs[SAPLING_INCOMING_VIEWING_KEY] = "siloktestsapling";
+        bech32HRPs[SAPLING_INCOMING_VIEWING_KEY] = "farmktestsapling";
         bech32HRPs[SAPLING_EXTENDED_SPEND_KEY]   = "p-secret-spending-key-test";
         bech32HRPs[SAPLING_EXTENDED_FVK]         = "pxviewtestsapling";
     }
 
-    const Checkpoints::CCheckpointData& Checkpoints() const
+    const CCheckpointData& Checkpoints() const
     {
         return dataRegtest;
     }

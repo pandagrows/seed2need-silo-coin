@@ -62,6 +62,7 @@
         <file alias="ic-arrow-white-right">seed2need/res/img/ic-arrow-white-right.svg</file>
         <file alias="ic-check-active">seed2need/res/img/ic-check-active.svg</file>
         <file alias="ic-check-box">seed2need/res/img/ic-check-box.svg</file>
+        <file alias="ic-check-box-light">seed2need/res/img/ic-check-box-light.svg</file>
         <file alias="ic-check-box-liliac-indeterminate">seed2need/res/img/ic-check-box-liliac-indeterminate.svg</file>
         <file alias="ic-check-connect-off">seed2need/res/img/ic-check-connect-off.svg</file>
         <file alias="ic-check-connect">seed2need/res/img/ic-check-connect.svg</file>
@@ -222,5 +223,19 @@
         <file alias="ic-check-cold-staking-enabled">seed2need/res/img/ic-check-cold-staking-enabled.svg</file>
         <file alias="ic-information">seed2need/res/img/ic-information.svg</file>
         <file alias="ic-information-hover">seed2need/res/img/ic-information-hover.svg</file>
+        <file alias="ic-check-vote">seed2need/res/img/ic-check-vote.svg</file>
+        <file alias="ic-check-vote-active">seed2need/res/img/ic-check-vote-active.svg</file>
+        <file alias="ic-check-vote-dark">seed2need/res/img/ic-check-vote-dark.svg</file>
+        <file alias="ic-check-vote-active-dark">seed2need/res/img/ic-check-vote-active-dark.svg</file>
+        <file alias="ic-filter">seed2need/res/img/ic-filter.svg</file>
+        <file alias="ic-link">seed2need/res/img/ic-link.svg</file>
+        <file alias="ic-link-hover">seed2need/res/img/ic-link-hover.svg</file>
+        <file alias="ic-nav-governance">seed2need/res/img/ic-nav-governance.svg</file>
+        <file alias="ic-nav-governance-active">seed2need/res/img/ic-nav-governance-active.svg</file>
+        <file alias="ic-nav-governance-hover">seed2need/res/img/ic-nav-governance-hover.svg</file>
+        <file alias="ic-time">seed2need/res/img/ic-time.svg</file>
+        <file alias="img-empty-governance">seed2need/res/img/img-empty-governance.svg</file>
+        <file alias="img-empty-dark-governance">seed2need/res/img/img-empty-dark-governance.svg</file>
+        <file alias="ic-check-block">seed2need/res/img/ic-check-block.svg</file>
     </qresource>
 </RCC>

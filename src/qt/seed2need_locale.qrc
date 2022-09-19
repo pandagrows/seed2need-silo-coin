@@ -4,15 +4,10 @@
         <file alias="en">locale/seed2need_en.qm</file>
         <file alias="en_US">locale/seed2need_en_US.qm</file>
         <file alias="es">locale/seed2need_es.qm</file>
-        <file alias="es_ES">locale/seed2need_es_ES.qm</file>
         <file alias="fr_FR">locale/seed2need_fr_FR.qm</file>
         <file alias="hr_HR">locale/seed2need_hr_HR.qm</file>
-        <file alias="it">locale/seed2need_it.qm</file>
         <file alias="ko_KR">locale/seed2need_ko_KR.qm</file>
         <file alias="nl">locale/seed2need_nl.qm</file>
         <file alias="pl">locale/seed2need_pl.qm</file>
-        <file alias="ru">locale/seed2need_ru.qm</file>
-        <file alias="tr">locale/seed2need_tr.qm</file>
-        <file alias="zh_CN">locale/seed2need_zh_CN.qm</file>
     </qresource>
 </RCC>
