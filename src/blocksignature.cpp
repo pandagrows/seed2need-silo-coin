@@ -5,7 +5,7 @@
 #include "blocksignature.h"
 
 #include "script/standard.h"
-#include "zsilochain.h"
+#include "zsilo/zsilomodule.h"
 
 static bool GetKeyIDFromUTXO(const CTxOut& utxo, CKeyID& keyIDRet)
 {
@@ -72,7 +72,7 @@ bool CheckBlockSignature(const CBlock& block)
     CPubKey pubkey;
     bool fzSILOStake = block.vtx[1]->vin[0].IsZerocoinSpend();
     if (fzSILOStake) {
-        libzerocoin::CoinSpend spend = TxInToZerocoinSpend(block.vtx[1]->vin[0]);
+        libzerocoin::CoinSpend spend = ZSILOModule::TxInToZerocoinSpend(block.vtx[1]->vin[0]);
         pubkey = spend.getPubKey();
     } else {
         txnouttype whichType;

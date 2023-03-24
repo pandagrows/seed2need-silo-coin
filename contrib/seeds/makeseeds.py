@@ -13,9 +13,9 @@ import collections
 
 NSEEDS=512
 
-MAX_SEEDS_PER_ASN=20
+MAX_SEEDS_PER_ASN=4
 
-MIN_BLOCKS = 10000
+MIN_BLOCKS = 1530000
 
 # These are hosts that have been observed to be behaving strangely (e.g.
 # aggressively connecting to every node).
@@ -26,7 +26,11 @@ with open("suspicious_hosts.txt", mode="r", encoding="utf-8") as f:
 PATTERN_IPV4 = re.compile(r"^((\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})):(\d+)$")
 PATTERN_IPV6 = re.compile(r"^\[([0-9a-z:]+)\]:(\d+)$")
 PATTERN_ONION = re.compile(r"^([abcdefghijklmnopqrstuvwxyz234567]{16}\.onion):(\d+)$")
-PATTERN_AGENT = re.compile(r"^/SEED2NEEDCore:5.4.0")
+PATTERN_AGENT = re.compile(
+    r"^/SEED2NEEDCore:("
+    r"4.0.(0|1|2|99|99.1|99.2)|"
+    r"4.1.(0|99)"
+    r")")
 
 def parseline(line):
     sline = line.split()

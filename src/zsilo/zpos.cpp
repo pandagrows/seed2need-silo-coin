@@ -5,7 +5,7 @@
 #include "zsilo/zpos.h"
 
 #include "validation.h"
-#include "zsilochain.h"
+#include "zsilo/zsilomodule.h"
 
 
 /*
@@ -72,7 +72,7 @@ CLegacyZSiloStake* CLegacyZSiloStake::NewZSiloStake(const CTxIn& txin, int nHeig
     }
 
     // Check spend type
-    libzerocoin::CoinSpend spend = TxInToZerocoinSpend(txin);
+    libzerocoin::CoinSpend spend = ZSILOModule::TxInToZerocoinSpend(txin);
     if (spend.getSpendType() != libzerocoin::SpendType::STAKE) {
         LogPrintf("%s : spend is using the wrong SpendType (%d)", __func__, (int)spend.getSpendType());
         return nullptr;

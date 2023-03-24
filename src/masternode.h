@@ -30,7 +30,6 @@ typedef std::shared_ptr<const CDeterministicMN> CDeterministicMNCPtr;
 
 int MasternodeMinPingSeconds();
 int MasternodeBroadcastSeconds();
-int MasternodeCollateralMinConf();
 int MasternodePingSeconds();
 int MasternodeExpirationSeconds();
 int MasternodeRemovalSeconds();
@@ -75,7 +74,7 @@ public:
 };
 
 //
-// The Masternode Class. It contains the input of the 1000000 SILO, signature to prove
+// The Masternode Class. It contains the input of the 10000 SILO, signature to prove
 // it's the one who own that ip address and code for calculating the payment election.
 //
 class CMasternode : public CSignedMessage

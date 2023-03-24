@@ -154,7 +154,6 @@ QPushButton[cssClass="img-nav-logo"] {
     background-color: #558b2f; /* Dark moderate green. https://www.colorhexa.com/558b2f */
     font-size:14px;
     color: #35281c; /* Very dark desaturated orange. https://www.colorhexa.com/35281c */
-
 }
 
 *[cssClass="btn-nav-settings"]:checked:hover {
@@ -1870,14 +1869,14 @@ HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH*/
     color:#35281c; /* Very dark desaturated orange. https://www.colorhexa.com/35281c */
     font-size:16px;
     padding:10px;
-    border-bottom: 5px solid #558b2f; /* Dark moderate green. https://www.colorhexa.com/558b2f */
+    border-bottom: 5px solid #35281c; /* Very dark desaturated orange. https://www.colorhexa.com/35281c */
 }
 
 *[cssClass="text-stake-silo-disable"] {
-    color:#7cb342; /* Moderate green. https://www.colorhexa.com/7cb342 */
+    color:#707070; /* Very dark gray. https://www.colorhexa.com/707070 */
     font-size:16px;
     padding:10px;
-    border-bottom: 5px solid #a2cc75; /* Slightly desaturated green. https://www.colorhexa.com/a2cc75 */
+    border-bottom: 5px solid #707070; /* Very dark gray. https://www.colorhexa.com/707070 */
 }
 
 *[cssClass="text-stake-mn"] {
@@ -1888,10 +1887,10 @@ HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH*/
 }
 
 *[cssClass="text-stake-mn-disable"] {
-    color:#7cb342; /* Moderate green. https://www.colorhexa.com/7cb342 */
+    color:#707070; /* Very dark gray. https://www.colorhexa.com/707070 */
     font-size:16px;
     padding:10px;
-    border-bottom: 5px solid #a2cc75; /* Slightly desaturated green. https://www.colorhexa.com/a2cc75 */
+    border-bottom: 5px solid #707070; /* Very dark gray. https://www.colorhexa.com/707070 */
 }
 
 *[cssClass="legend-chart"] {
@@ -1906,7 +1905,7 @@ HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH*/
 }
 
 *[cssClass="text-chart-silo"] {
-   color:#7cb342; /* Moderate green. https://www.colorhexa.com/7cb342 */
+   color:#35281c; /* Very dark desaturated orange. https://www.colorhexa.com/35281c */
     font-size:16px;
     padding-left:4px;
 }
@@ -1917,7 +1916,7 @@ HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH*/
 }
 
 *[cssClass="square-chart-silo"] {
-    background-color:#7cb342; /* Moderate green. https://www.colorhexa.com/7cb342 */
+    background-color:#35281c; /* Very dark desaturated orange. https://www.colorhexa.com/35281c */
     border:none;
 }
 
@@ -2603,6 +2602,7 @@ QComboBox[cssClass="btn-combo"] {
     font-size:16px;
     border:1px solid #ffffff; /* White. https://www.colorhexa.com/ffffff */
     color: #707070; /* Very dark gray. https://www.colorhexa.com/707070 */
+    selection-color:#707070;
     text-align: right;
 }
 
@@ -3228,7 +3228,7 @@ HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH*/
 *[cssClass="container-faq-buttons"] {
     background:transparent;
     border:1px solid #558b2f; /* Dark moderate green. https://www.colorhexa.com/558b2f */
-    border-radius:5px;
+    border-radius: 5px;
 }
 
 *[cssClass="text-subtitle-faq"] {

@@ -9,7 +9,6 @@
 #include "qt/seed2need/tooltipmenu.h"
 
 #include "qt/seed2need/addnewcontactdialog.h"
-#include "qt/seed2need/seed2needgui.h"
 #include "guiutil.h"
 #include "qt/seed2need/qtutils.h"
 #include "walletmodel.h"

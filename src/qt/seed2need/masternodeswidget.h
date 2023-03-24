@@ -8,7 +8,6 @@
 #include "qt/seed2need/pwidget.h"
 #include "qt/seed2need/furabstractlistitemdelegate.h"
 #include "qt/seed2need/tooltipmenu.h"
-#include "walletmodel.h"
 
 #include <atomic>
 

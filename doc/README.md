@@ -30,7 +30,7 @@ Drag SEED2NEED-Qt to your applications folder, and then run SEED2NEED-Qt.
 
 * See the documentation at the [SEED2NEED Wiki](https://github.com/pandagrows/seed2need-farm-coin/wiki)
 for help and more information.
-* Ask for help on [BitcoinTalk](https://bitcointalk.org/index.php?topic=1262920.0) or on the [SEED2NEED Forum](http://forum.seed2need.org/).
+* Ask for help on the [SEED2NEED Forum](http://forum.seed2need.org/).
 * Join our Discord server [Discord Server](https://discord.seed2need.me)
 
 Building
@@ -58,11 +58,10 @@ The SEED2NEED repo's [root README](/README.md) contains relevant information on 
 - [Dnsseed Policy](dnsseed-policy.md)
 
 ### Resources
-* Discuss on the [BitcoinTalk](https://bitcointalk.org/index.php?topic=1262920.0) or the [SEED2NEED](http://forum.seed2need.org/) forum.
+* Discuss on the [SEED2NEED](http://forum.seed2need.org/) forum.
 * Join the [SEED2NEED Discord](https://discord.seed2need.me).
 
 ### Miscellaneous
-- [Assets Attribution](assets-attribution.md)
 - [Files](files.md)
 - [Fuzz-testing](fuzzing.md)
 - [Reduce Memory](reduce-memory.md)

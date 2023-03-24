@@ -1,7 +1,7 @@
 [main]
 host = https://www.transifex.com
 
-[seed2need-project-translations.qt-translation-54x]
+[seed2need-project-translations.qt-translation-50x]
 file_filter = src/qt/locale/seed2need_<lang>.ts
 source_file = src/qt/locale/seed2need_en.ts
 source_lang = en

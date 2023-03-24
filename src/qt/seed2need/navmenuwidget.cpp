@@ -4,7 +4,6 @@
 
 #include "qt/seed2need/navmenuwidget.h"
 #include "qt/seed2need/forms/ui_navmenuwidget.h"
-#include "qt/seed2need/seed2needgui.h"
 #include "qt/seed2need/qtutils.h"
 #include "clientversion.h"
 #include "optionsmodel.h"

@@ -5,7 +5,6 @@
 #include "qt/seed2need/tooltipmenu.h"
 #include "qt/seed2need/forms/ui_tooltipmenu.h"
 
-#include "qt/seed2need/seed2needgui.h"
 #include "qt/seed2need/qtutils.h"
 #include <QTimer>
 

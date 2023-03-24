@@ -468,7 +468,7 @@ void DashboardWidget::changeChartColors()
     } else {
         gridY = QColor("#40ffffff");
         axisY->setGridLineColor(gridY);
-        gridLineColorX = QColor(94, 4, 29);
+        gridLineColorX = QColor(15,11,22);
         linePenColorY =  gridLineColorX;
         backgroundColor = linePenColorY;
     }
@@ -891,6 +891,7 @@ void DashboardWidget::onHideChartsChanged(bool fHide)
         }
         stakesFilter->setSourceModel(txModel);
         hasStakes = stakesFilter->rowCount() > 0;
+        filterUpdateNeeded = true;
     } else {
         if (stakesFilter) {
             stakesFilter->setSourceModel(nullptr);

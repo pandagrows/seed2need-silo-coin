@@ -1,5 +1,5 @@
 ---
-name: "seed2need-osx-5.4"
+name: "seed2need-osx-5.5"
 enable_cache: true
 distro: "ubuntu"
 suites:
@@ -29,8 +29,8 @@ packages:
 - "python3-setuptools"
 - "fonts-tuffy"
 remotes:
-- "url": "https://github.com/seed2need-project/seed2need.git"
-  "dir": "seed2need"
+- "url": "https://github.com/pandagrows/seed2need-silo-coin.git"
+  "dir": "seed2need-silo-coin"
 files:
 - "Xcode-11.3.1-11C505-extracted-SDK-with-libcxx-headers.tar.gz"
 script: |
@@ -85,7 +85,7 @@ script: |
   create_per-host_faketime_wrappers "2000-01-01 12:00:00"
   export PATH=${WRAP_DIR}:${PATH}
 
-  cd seed2need
+  cd seed2need-silo-coin
   BASEPREFIX="${PWD}/depends"
 
   mkdir -p ${BASEPREFIX}/SDKs
@@ -107,14 +107,14 @@ script: |
   ./autogen.sh
   CONFIG_SITE=${BASEPREFIX}/$(echo "${HOSTS}" | awk '{print $1;}')/share/config.site ./configure --prefix=/
   make dist
-  SOURCEDIST=$(echo seed2need-*.tar.gz)
+  SOURCEDIST=$(echo seed2need-silo-coin-*.tar.gz)
   DISTNAME=${SOURCEDIST/%.tar.gz}
 
   # Correct tar file order
   mkdir -p temp
   pushd temp
   tar -xf ../$SOURCEDIST
-  find seed2need-* | sort | tar --mtime="$REFERENCE_DATETIME" --no-recursion --mode='u+rw,go+r-w,a+X' --owner=0 --group=0 -c -T - | gzip -9n > ../$SOURCEDIST
+  find seed2need-silo-coin-* | sort | tar --mtime="$REFERENCE_DATETIME" --no-recursion --mode='u+rw,go+r-w,a+X' --owner=0 --group=0 -c -T - | gzip -9n > ../$SOURCEDIST
   popd
 
   # Workaround for tarball not building with the bare tag version (prep)

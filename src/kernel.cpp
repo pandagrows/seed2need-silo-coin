@@ -15,7 +15,6 @@
 #include "util/system.h"
 #include "utilmoneystr.h"
 #include "validation.h"
-#include "zsilochain.h"
 #include "zsilo/zpos.h"
 
 /**

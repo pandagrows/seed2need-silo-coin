@@ -2,7 +2,7 @@
 # Copyright (c) 2019 The PIVX developers
 name: seed2need-core
 base: core18
-version: 5.4.0
+version: 5.4.99
 summary:   SEED2NEED (Private – Instant – Verified – Transaction)
 description: |
   SEED2NEED is an MIT licensed,

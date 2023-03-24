@@ -611,7 +611,7 @@ int SEED2NEEDGUI::getNavWidth()
 void SEED2NEEDGUI::openFAQ(SettingsFaqWidget::Section section)
 {
     showHide(true);
-    SettingsFaqWidget* dialog = new SettingsFaqWidget(this, clientModel);
+    SettingsFaqWidget* dialog = new SettingsFaqWidget(this, mnModel);
     dialog->setSection(section);
     openDialogWithOpaqueBackgroundFullScreen(dialog, this);
     dialog->deleteLater();
@@ -625,9 +625,10 @@ void SEED2NEEDGUI::setGovModel(GovernanceModel* govModel)
     governancewidget->setGovModel(govModel);
 }
 
-void SEED2NEEDGUI::setMNModel(MNModel* mnModel)
+void SEED2NEEDGUI::setMNModel(MNModel* _mnModel)
 {
     if (!stackedContainer || !clientModel) return;
+    mnModel = _mnModel;
     governancewidget->setMNModel(mnModel);
     masterNodesWidget->setMNModel(mnModel);
 }
