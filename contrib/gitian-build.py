@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # Copyright (c) 2018-2019 The Bitcoin Core developers
-# Copyright (c) 2019-2020 The PIVX developers
+# Copyright (c) 2019-2021 The SEED2NEED Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -104,13 +104,13 @@ def setup_darwin():
 
 def setup_repos():
     if not os.path.isdir('gitian.sigs'):
-        subprocess.check_call(['git', 'clone', 'https://github.com/pivx-Project/gitian.sigs.git'])
+        subprocess.check_call(['git', 'clone', 'https://github.com/seed2need-Project/gitian.sigs.git'])
     if not os.path.isdir('seed2need-detached-sigs'):
-        subprocess.check_call(['git', 'clone', 'https://github.com/pivx-Project/pivx-detached-sigs.git'])
+        subprocess.check_call(['git', 'clone', 'https://github.com/seed2need-Project/seed2need-detached-sigs.git'])
     if not os.path.isdir('gitian-builder'):
         subprocess.check_call(['git', 'clone', 'https://github.com/devrandom/gitian-builder.git'])
     if not os.path.isdir('seed2need'):
-        subprocess.check_call(['git', 'clone', 'https://github.com/pandagrows/seed2need-silo-coin.git'])
+        subprocess.check_call(['git', 'clone', 'https://github.com/seed2need-Project/seed2need.git'])
     os.chdir('gitian-builder')
     make_image_prog = ['bin/make-base-vm', '--suite', 'bionic', '--arch', 'amd64']
     if args.docker:

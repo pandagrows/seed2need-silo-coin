@@ -1,3 +1,7 @@
+// Copyright (c) 2020 The SEED2NEED Core developers
+// Distributed under the MIT software license, see the accompanying
+// file COPYING or http://www.opensource.org/licenses/mit-license.php.
+
 #include "test/test_seed2need.h"
 #include "crypto/sha256.h"
 #include "uint256.h"

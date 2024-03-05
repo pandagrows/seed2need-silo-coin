@@ -1,3 +1,7 @@
+// Copyright (c) 2021-2022 The SEED2NEED Core developers
+// Distributed under the MIT software license, see the accompanying
+// file COPYING or http://www.opensource.org/licenses/mit-license.php.
+
 #include "qt/seed2need/governancewidget.h"
 #include "qt/seed2need/forms/ui_governancewidget.h"
 

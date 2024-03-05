@@ -8,7 +8,7 @@ architectures:
 packages:
 - "faketime"
 remotes:
-- "url": "https://github.com/pivx-project/pivx-detached-sigs.git"
+- "url": "https://github.com/seed2need-project/seed2need-detached-sigs.git"
   "dir": "signature"
 files:
 - "seed2need-osx-unsigned.tar.gz"

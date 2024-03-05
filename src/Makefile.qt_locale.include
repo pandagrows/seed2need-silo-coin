@@ -1,15 +1,15 @@
 QT_TS = \
+  qt/locale/seed2need_bn.ts \
   qt/locale/seed2need_de.ts \
   qt/locale/seed2need_en.ts \
-  qt/locale/seed2need_en_US.ts \
   qt/locale/seed2need_es.ts \
   qt/locale/seed2need_es_ES.ts \
+  qt/locale/seed2need_fa.ts \
   qt/locale/seed2need_fr_FR.ts \
   qt/locale/seed2need_hr_HR.ts \
-  qt/locale/seed2need_it.ts \
   qt/locale/seed2need_ko_KR.ts \
   qt/locale/seed2need_nl.ts \
   qt/locale/seed2need_pl.ts \
-  qt/locale/seed2need_ru.ts \
-  qt/locale/seed2need_tr.ts \
-  qt/locale/seed2need_zh_CN.ts
+  qt/locale/seed2need_pt.ts \
+  qt/locale/seed2need_pt_BR.ts \
+  qt/locale/seed2need_sv.ts

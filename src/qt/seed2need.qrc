@@ -142,10 +142,12 @@
         <file alias="ic-transaction-warning">seed2need/res/img/ic-transaction-warning.svg</file>
         <file alias="ic-transaction-mint">seed2need/res/img/ic-transaction-mint.svg</file>
         <file alias="ic-transaction-received">seed2need/res/img/ic-transaction-received.svg</file>
+        <file alias="ic-transaction-received-memo">seed2need/res/img/ic-transaction-received-memo.svg</file>
         <file alias="ic-transaction-sent">seed2need/res/img/ic-transaction-sent.svg</file>
         <file alias="ic-transaction-staked">seed2need/res/img/ic-transaction-staked.svg</file>
         <file alias="ic-transaction-mint-dark">seed2need/res/img/dark/ic-transaction-mint.svg</file>
         <file alias="ic-transaction-received-dark">seed2need/res/img/dark/ic-transaction-received.svg</file>
+        <file alias="ic-transaction-received-memo-dark">seed2need/res/img/dark/ic-transaction-received-memo.svg</file>
         <file alias="ic-transaction-sent-dark">seed2need/res/img/dark/ic-transaction-sent.svg</file>
         <file alias="ic-transaction-staked-dark">seed2need/res/img/dark/ic-transaction-staked.svg</file>
         <file alias="ic-transaction-mint-inactive">seed2need/res/img/ic-transaction-mint-inactive.svg</file>

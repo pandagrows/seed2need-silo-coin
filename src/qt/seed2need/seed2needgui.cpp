@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2020 The PIVX developers
+// Copyright (c) 2019-2022 The SEED2NEED Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -425,7 +425,7 @@ void SEED2NEEDGUI::message(const QString& title, const QString& message, unsigne
         } else {
             r = openStandardDialog((title.isEmpty() ? strTitle : title), message, "OK");
         }
-        if (ret != NULL)
+        if (ret != nullptr)
             *ret = r;
     } else if (style & CClientUIInterface::MSG_INFORMATION_SNACK) {
         messageInfo(message);
@@ -505,6 +505,7 @@ void SEED2NEEDGUI::goToAddresses()
 
 void SEED2NEEDGUI::goToMasterNodes()
 {
+    masterNodesWidget->resetCoinControl();
     showTop(masterNodesWidget);
 }
 

@@ -1,7 +1,7 @@
 // Copyright (c) 2010 Satoshi Nakamoto
 // Copyright (c) 2009-2015 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
-// Copyright (c) 2015-2020 The PIVX developers
+// Copyright (c) 2015-2022 The SEED2NEED Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -166,12 +166,13 @@ static MapCheckpoints mapCheckpoints = {
 	{ 400000, uint256S("c5e56c75573fa553c97d392acbe1a50337147d611449127d558f25668dc2c39d")},
 	{ 700000, uint256S("dc2e3cba02ae54d3549d3c3605c2f7d9b763fd28affbfdba3f469e9f24fa91c0")},
 	{ 784630, uint256S("a75b94fce783b33e1dff544fa278cd7ace4725d76d98a7be03f45d2960ee0d3b")},
+	{ 1272782, uint256S("a75b94fce783b33e1dff544fa278cd7ace4725d76d98a7be03f45d2960ee0d3b")},
 };
 
 static const CCheckpointData data = {
     &mapCheckpoints,
     1679624865, // * UNIX timestamp of last checkpoint block
-    1771936,    // * total number of transactions between genesis and last checkpoint
+    2757020,    // * total number of transactions between genesis and last checkpoint
                 //   (the tx=... number in the UpdateTip debug.log lines)
     3000        // * estimated number of transactions per day after checkpoint
 };
@@ -213,7 +214,7 @@ public:
         consensus.posLimitV2 = uint256S("0x00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.nBudgetCycleBlocks = 43200;       // approx. 1 every 30 days
         consensus.nBudgetFeeConfirmations = 6;      // Number of confirmations for the finalization fee
-        consensus.nCoinbaseMaturity = 50;
+        consensus.nCoinbaseMaturity = 100;
         consensus.nFutureTimeDriftPoW = 7200;
         consensus.nFutureTimeDriftPoS = 180;
         consensus.nMaxMoneyOut = 521000000 * COIN;
@@ -276,7 +277,8 @@ public:
         consensus.vUpgrades[Consensus::UPGRADE_V5_0].nActivationHeight          = 6000;
         consensus.vUpgrades[Consensus::UPGRADE_V5_2].nActivationHeight          = 553044;
         consensus.vUpgrades[Consensus::UPGRADE_V5_3].nActivationHeight          = 563044;
-        consensus.vUpgrades[Consensus::UPGRADE_V5_5].nActivationHeight          = 804632;
+		consensus.vUpgrades[Consensus::UPGRADE_V5_5].nActivationHeight          = 804632;
+        consensus.vUpgrades[Consensus::UPGRADE_V5_6].nActivationHeight          = 1350001;  // Estimate Feb 29th 12:00 UTC
         consensus.vUpgrades[Consensus::UPGRADE_V6_0].nActivationHeight =
                 Consensus::NetworkUpgrade::NO_ACTIVATION_HEIGHT;
 
@@ -313,6 +315,7 @@ public:
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1, 35);
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1, 23);
         base58Prefixes[STAKING_ADDRESS] = std::vector<unsigned char>(1, 38);     // starting with 'S'
+        base58Prefixes[EXCHANGE_ADDRESS] = {0x01, 0xb9, 0xa4};   // starts with EXM
         base58Prefixes[SECRET_KEY] = std::vector<unsigned char>(1, 80);
         base58Prefixes[EXT_PUBLIC_KEY] = {0xbe, 0xae, 0x47, 0x8e};
         base58Prefixes[EXT_SECRET_KEY] = {0xb0, 0x45, 0xb9, 0x31};
@@ -340,6 +343,8 @@ public:
         consensus.llmqs[Consensus::LLMQ_400_85] = llmq400_85;
 
         nLLMQConnectionRetryTimeout = 60;
+
+        consensus.llmqChainLocks = Consensus::LLMQ_400_60;
 
         // Tier two
         nFulfilledRequestExpireTime = 60 * 60; // fulfilled requests expire in 1 hour
@@ -434,6 +439,7 @@ public:
         consensus.vUpgrades[Consensus::UPGRADE_V5_2].nActivationHeight          = 201;
         consensus.vUpgrades[Consensus::UPGRADE_V5_3].nActivationHeight          = 201;
         consensus.vUpgrades[Consensus::UPGRADE_V5_5].nActivationHeight          = 925056;
+        consensus.vUpgrades[Consensus::UPGRADE_V5_6].nActivationHeight          = 1624280; // Estimate Feb 23 Midnight UTC
         consensus.vUpgrades[Consensus::UPGRADE_V6_0].nActivationHeight =
                 Consensus::NetworkUpgrade::NO_ACTIVATION_HEIGHT;
 
@@ -455,6 +461,7 @@ public:
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1, 58); // Testnet seed2need addresses start with 'x' or 'y'
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1, 48);  // Testnet seed2need script addresses start with '8' or '9'
         base58Prefixes[STAKING_ADDRESS] = std::vector<unsigned char>(1, 53);     // starting with 'W'
+        base58Prefixes[EXCHANGE_ADDRESS] = {0x01, 0xb9, 0xb3};   // EXT prefix for the address
         base58Prefixes[SECRET_KEY] = std::vector<unsigned char>(1, 61);     // Testnet private keys start with '9' or 'c' (Bitcoin defaults)
         // Testnet seed2need BIP32 pubkeys start with 'DRKV'
         base58Prefixes[EXT_PUBLIC_KEY] = {0x8d, 0x85, 0x13, 0x49};
@@ -483,6 +490,8 @@ public:
         consensus.llmqs[Consensus::LLMQ_400_85] = llmq400_85;
 
         nLLMQConnectionRetryTimeout = 60;
+
+        consensus.llmqChainLocks = Consensus::LLMQ_400_60;
 
         // Tier two
         nFulfilledRequestExpireTime = 60 * 60; // fulfilled requests expire in 1 hour
@@ -582,6 +591,7 @@ public:
         consensus.vUpgrades[Consensus::UPGRADE_V5_2].nActivationHeight          = 300;
         consensus.vUpgrades[Consensus::UPGRADE_V5_3].nActivationHeight          = 251;
         consensus.vUpgrades[Consensus::UPGRADE_V5_5].nActivationHeight          = 576;
+        consensus.vUpgrades[Consensus::UPGRADE_V5_6].nActivationHeight          = 1000;
         consensus.vUpgrades[Consensus::UPGRADE_V6_0].nActivationHeight =
                 Consensus::NetworkUpgrade::NO_ACTIVATION_HEIGHT;
 
@@ -599,6 +609,7 @@ public:
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1, 63); // Testnet seed2need addresses start with 'x' or 'y'
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1, 78);  // Testnet seed2need script addresses start with '8' or '9'
         base58Prefixes[STAKING_ADDRESS] = std::vector<unsigned char>(1, 73);     // starting with 'W'
+        base58Prefixes[EXCHANGE_ADDRESS] = {0x01, 0xb9, 0xb4};   // EXT prefix for the address
         base58Prefixes[SECRET_KEY] = std::vector<unsigned char>(1, 43);     // Testnet private keys start with '9' or 'c' (Bitcoin defaults)
         // Testnet seed2need BIP32 pubkeys start with 'DRKV'
         base58Prefixes[EXT_PUBLIC_KEY] = {0x3b, 0xb0, 0x7d, 0x1b};
@@ -623,6 +634,8 @@ public:
         // long living quorum params
         consensus.llmqs[Consensus::LLMQ_TEST] = llmq_test;
         nLLMQConnectionRetryTimeout = 10;
+
+        consensus.llmqChainLocks = Consensus::LLMQ_TEST;
 
         // Tier two
         nFulfilledRequestExpireTime = 60 * 60; // fulfilled requests expire in 1 hour
